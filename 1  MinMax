@@ -1,0 +1,91 @@
+1
+Write a program to find the maximum and minimum element
+from the collection of elements using divide and conquer
+technique.
+
+Algorithm:
+Alogrithm MaxMin(i, j, max, min)
+// a[1:n] is a global array. Parameters i and j are integers, // 1≤i≤j≤n. The effect is to set max and min to the largest and // smallest values
+in a[i:j]. {
+if (i=j) then max := min := a[i]; //Small(P)
+else if (i=j-1) then // Another case of Small(P)
+{
+if (a[i] < a[j]) then max := a[j]; min := a[i];
+else max := a[i]; min := a[j];
+}
+else
+{
+// if P is not small, divide P into sub-problems. // Find where to split the set. mid := ( i + j )/2;
+// Solve the sub-problems. MaxMin( i, mid, max, min );
+MaxMin( mid+1, j, max1, min1 );
+// Combine the solutions.
+if (max < max1) then max := max1;
+if (min > min1) then min := min1;
+}
+}
+
+
+program:
+
+#include<stdio.h>
+int max,min;
+int a[100];
+void maxmin(int i,int j)
+{
+int max1,min1,mid;
+if(i==j)
+{
+max=min=a[i];
+}
+else
+{
+if(i==j-1)
+{
+if(a[i]<a[j])
+{
+max=a[j];
+min=a[i];
+}
+else
+{
+max= a[i];
+min=a[j];
+}
+}
+else
+{
+mid=(i+j)/2;
+maxmin(i,mid);
+max1=max; min1=min;
+maxmin(mid+1,j);
+if(max<max1)
+max=max1;
+if(min>min1)
+min=min1;
+}
+}
+}
+void main ()
+{
+int i,s;
+printf("\n Enter size of input....");
+scanf("%d",&s);
+printf("Enter the numbers : \n");
+for(i=1;i<=s;i++)
+scanf("%d",&a[i]);
+max =-1;
+min =9999;
+maxmin(1,s);
+printf ("maximum element is: %d\n",max);
+printf ("minimum element is: %d\n",min);
+}
+Output:
+Enter size of input....5
+Enter the numbers :
+12
+56
+2
+45
+67
+maximum element is: 67
+minimum element is: 2
